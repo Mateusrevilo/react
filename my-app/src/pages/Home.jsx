@@ -9,6 +9,7 @@ function Home() {
 
     // 1- Lista dinamica dos produtos renderizados na tela 
     const [produtos, setProdutos] = useState([]);
+    const [carregando, setCarregando] = useState(true)
     const [novoProduto, setNovoProduto] = useState({
         nome: "",
         preco: "",
@@ -23,6 +24,7 @@ function Home() {
         ];
         setTimeout(() => {
             setProdutos(ListaDeProduto);
+            setCarregando(false)
         }, 1200);
     }, []);
 
@@ -50,11 +52,15 @@ function Home() {
             <>
                 <div className="p-4 m-5" >
                     <h3>Lista de produtos:</h3>
-                    <div className="p-3 m-4">
-                        <div key={produtos.id} >
-                            <> {produtos.map((produtos) => <ProdutoCard key={produtos.id} {...produtos} onDelete={() => handleDeleteProduto(produtos.id)} />)}</>
+                    {carregando ? (
+                        <p>Carregando...</p>
+                    ) : (
+                        <div className="p-3 m-4">
+                            <div>
+                                <> {produtos.map((produto) => <ProdutoCard key={produto.id} {...produto} onDelete={() => handleDeleteProduto(produto.id)} />)}</>
+                            </div>
                         </div>
-                    </div>
+                    )}
 
                 </div>
 
